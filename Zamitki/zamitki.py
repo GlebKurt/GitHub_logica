@@ -20,19 +20,28 @@ class Widget(QMainWindow):
             self.notes = {}
         self.ui.listWidget.addItems(self.notes.keys())
 
+    def add_note(self):
+        note_name, ok = QInputDialog.getText(self, 'Створити замітку', 'Назва замітки:')
+        if ok and note_name != '':
+            if note_name not in self.notes:
+                self.notes[note_name] = {'текст': '', 'теги': []}
+                self.ui.listWidget.addItems(note_name)
+                self.ui.textEdit.clear()
+            else:
+                self.ui.textEdit.setPlainText(self.notes[note_name]['текст'])
+            self.ui.listWidget_2.clear()
+            self.ui.listWidget_2.addItems(self.notes[note_name]['теги'])
+            print(self.notes)
 
-def add_note(self):
-    note_name, ok = QInputDialog.getText(self, 'Створити замітку', 'Назва замітки:')
-    if ok and note_name != '':
-        if note_name not in self.notes:
-            self.notes[note_name] = {'текст': '', 'теги': []}
-            self.ui.listWidget.addItems(note_name)
-            self.ui.textEdit.clear()
-        else:
-            self.ui.textEdit.setPlainText(self.notes[note_name]['текст'])
-        self.ui.listWidget_2.clear()
-        self.ui.listWidget_2.addItems(self.notes[note_name]['теги'])
-        print(self.notes)
+    def snow_note(self):
+        if self.ui.listWidget.selectedItems():
+            key = self.ui.listWidget.selectedItems()[0].text
+            if 'текст' in self.notes[key]:
+                self.ui.textEdit.setPlainText(self.notes[key]['текст'])
+            else:
+                self.ui.textEdit.clear()
+            self.ui.listWidget_2.clear()
+            self.ui.listWidget_2.addItems(self.notes[key]['теги'])
 
 
 app = QApplication([])
