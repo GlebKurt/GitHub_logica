@@ -25,6 +25,10 @@ def add_note(self):
         if note_name not in self.notes:
             self.notes[note_name] = {'текст': '', 'теги': []}
             self.ui.listWidget.addItem(note_name)
+            self.ui.textEdit.clear()
+        else:
+            self.ui.textEdit.setPlainText(self.notes[note_name]['текст'])
+        self.ui.listWidget_2.clear()
 
 
 app = QApplication([])
