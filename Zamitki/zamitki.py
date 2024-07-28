@@ -10,6 +10,8 @@ class Widget(QMainWindow):
         self.ui.setupUi(self)
         self.load_data()
 
+        self.ui.pushButton.clicked.connect(self.add_note)
+
     def load_data(self):
         try:
             with open('notes_data.json', 'r', encoding='utf-8') as file:
@@ -24,11 +26,13 @@ def add_note(self):
     if ok and note_name != '':
         if note_name not in self.notes:
             self.notes[note_name] = {'текст': '', 'теги': []}
-            self.ui.listWidget.addItem(note_name)
+            self.ui.listWidget.addItems(note_name)
             self.ui.textEdit.clear()
         else:
             self.ui.textEdit.setPlainText(self.notes[note_name]['текст'])
         self.ui.listWidget_2.clear()
+        self.ui.listWidget_2.addItems(self.notes[note_name]['теги'])
+        print(self.notes)
 
 
 app = QApplication([])
